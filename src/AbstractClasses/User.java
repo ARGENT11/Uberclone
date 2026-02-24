@@ -43,4 +43,31 @@ abstract class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void updateProfile(String name, String email, String phoneNumber, LocalDate dateOfBirth) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void viewProfile() {
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Date of Birth: " + dateOfBirth);
+        System.out.println("Age: " + getAge());
+    }
 }
