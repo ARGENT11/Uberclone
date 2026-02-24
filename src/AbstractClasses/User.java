@@ -1,15 +1,16 @@
 
-
 package AbstractClasses;
 
 import java.time.LocalDate;
 import java.time.Period;//to calculate age based on date of birth
 
-abstract class User {
+public abstract class User {
     private String name;
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
+    private double ratingSum = 5.0; // Initial rating sum (5.0)
+    private int ratingCount = 1; // Initial rating count
 
     public User(String name, String email, String phoneNumber, LocalDate dateOfBirth) {
         this.name = name;
@@ -17,29 +18,45 @@ abstract class User {
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
     }
-    
-    //get
+
+    // get
     public String getName() {
         return name;
     }
-    
+
     public String getEmail() {
         return email;
     }
-    
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    
+
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
-    
+
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
-    
-    //set
+
+    public double getRating() {
+        return ratingSum / ratingCount;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void addRating(double newRating) {
+        if (newRating < 1.0 || newRating > 5.0) {
+            throw new IllegalArgumentException("Rating must be between 1.0 and 5.0");
+        }
+        ratingSum += newRating;
+        ratingCount++;
+    }
+
+    // set
     public void setName(String name) {
         this.name = name;
     }
@@ -65,9 +82,7 @@ abstract class User {
 
     public void viewProfile() {
         System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
         System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("Date of Birth: " + dateOfBirth);
-        System.out.println("Age: " + getAge());
+        System.out.println("Rating: " + String.format("%.2f", getRating()) + " (" + getRatingCount() + " ratings)");
     }
 }
