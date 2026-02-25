@@ -5,18 +5,24 @@ import java.time.LocalDate;
 import java.time.Period;//to calculate age based on date of birth
 
 public abstract class User {
+    public enum UserType { PASSENGER, DRIVER }
+    
     private String name;
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private double ratingSum = 5.0; // Initial rating sum (5.0)
     private int ratingCount = 1; // Initial rating count
+    private UserType userType;
+    private String password;
 
-    public User(String name, String email, String phoneNumber, LocalDate dateOfBirth) {
+    public User(String name, String email, String phoneNumber, LocalDate dateOfBirth, UserType userType, String password) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        this.userType = userType;
+        this.password = password;
     }
 
     // get
@@ -34,6 +40,14 @@ public abstract class User {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public int getAge() {
@@ -54,6 +68,9 @@ public abstract class User {
         }
         ratingSum += newRating;
         ratingCount++;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     // set

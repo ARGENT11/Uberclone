@@ -6,8 +6,8 @@ public class Driver extends User {
     private Vehicle vehicle;
     private boolean isAvailable;
 
-    public Driver(String name, String email, String phoneNumber, java.time.LocalDate dateOfBirth, Vehicle vehicle) {
-        super(name, email, phoneNumber, dateOfBirth);
+    public Driver(String name, String email, String phoneNumber, java.time.LocalDate dateOfBirth, Vehicle vehicle, String password) {
+        super(name, email, phoneNumber, dateOfBirth, User.UserType.DRIVER, password);
         this.vehicle = vehicle;
         this.isAvailable = true;  // Drivers start as available
     }

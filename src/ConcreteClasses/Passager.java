@@ -8,8 +8,8 @@ public class Passager extends User implements UserOperations {
     private String paymentMethod;
 
     public Passager(String name, String email, String phoneNumber, java.time.LocalDate dateOfBirth,
-            double balance, String paymentMethod) {
-        super(name, email, phoneNumber, dateOfBirth);
+            double balance, String paymentMethod, String password) {
+        super(name, email, phoneNumber, dateOfBirth, User.UserType.PASSENGER, password);
         this.balance = balance;
         this.paymentMethod = paymentMethod;
     }
@@ -60,7 +60,7 @@ public class Passager extends User implements UserOperations {
         }
     }
 
-    @Override
+    
     public void viewProfile() {
         super.viewProfile();
         System.out.println("Balance: $" + balance);
