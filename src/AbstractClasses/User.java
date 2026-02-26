@@ -62,6 +62,10 @@ public abstract class User {
         return ratingCount;
     }
 
+    public UserType getTypeOfUser() {
+        return userType;
+    }
+
     public void addRating(double newRating) {
         if (newRating < 1.0 || newRating > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1.0 and 5.0");
@@ -69,11 +73,13 @@ public abstract class User {
         ratingSum += newRating;
         ratingCount++;
     }
+
+    // set
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // set
+    
     public void setName(String name) {
         this.name = name;
     }
