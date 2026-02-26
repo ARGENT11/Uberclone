@@ -25,54 +25,61 @@ public class AppMenu {
             showMainMenu();
             int choice = InputHandler.getIntInput("Choose an option: ");
             switch (choice) {
-                case 1 -> handleSignup();
-                case 2 -> handleSignin();
-                case 3 -> { running = false; System.out.println("Exiting..."); }
+                case 1 -> SignupMenu();
+                case 2 -> SigninMenu();
+                case 3 -> {
+                    running = false;
+                    System.out.println("Exiting...");
+                }
                 default -> System.out.println("Invalid choice.");
             }
         }
     }
 
     private void showMainMenu() {
-        System.out.println("\n--- Uber App ---");
+        System.out.println("\n--- Uber ---");
         System.out.println("1. Signup");
         System.out.println("2. Signin");
         System.out.println("3. Exit");
     }
 
-    private void handleSignup() {
+    private void SignupMenu() {
         System.out.println("\n--- Signup ---");
         System.out.println("1. Passenger\n2. Driver");
-        int type = InputHandler.getIntInput("Choose user type: ");
+        User.UserType type = InputHandler.getUserTypeInput("Choose user type: ");
         String name = InputHandler.getStringInput("Name: ");
         String email = InputHandler.getStringInput("Email: ").toLowerCase();
         String phone = InputHandler.getStringInput("Phone: ");
         LocalDate dob = InputHandler.getDateInput("Date of birth (YYYY-MM-DD): ");
         String password = InputHandler.getStringInput("Password: ");
 
-        if (type == 1) {
+        if (type == User.UserType.PASSENGER) {
             double balance = InputHandler.getDoubleInput("Initial balance: ");
             String payment = InputHandler.getStringInput("Payment method: ");
             Passager p = new Passager(name, email, phone, dob, balance, payment, password);
-            if (auth.signup(p)) System.out.println("Passenger signed up.");
-            else System.out.println("Signup failed: email already exists.");
-        } else if (type == 2) {
+            if (auth.signup(p))
+                System.out.println("Passenger signed up.");
+            else
+                System.out.println("Signup failed: email already exists.");
+        } else if (type == User.UserType.DRIVER) {
             String color = InputHandler.getStringInput("Vehicle color: ");
             String brand = InputHandler.getStringInput("Vehicle brand: ");
             String model = InputHandler.getStringInput("Vehicle model: ");
             String typeV = InputHandler.getStringInput("Vehicle type: ");
             String plate = InputHandler.getStringInput("Plate number: ");
             int seats = InputHandler.getIntInput("Number of seats: ");
-            Vehicle v = new Vehicle(color, brand, model, typeV, plate, seats);
+            Vehicle v = new Car(color, brand, model, typeV, plate, seats);
             Driver d = new Driver(name, email, phone, dob, v, password);
-            if (auth.signup(d)) System.out.println("Driver signed up.");
-            else System.out.println("Signup failed: email already exists.");
+            if (auth.signup(d))
+                System.out.println("Driver signed up.");
+            else
+                System.out.println("Signup failed: email already exists.");
         } else {
             System.out.println("Invalid user type.");
         }
     }
 
-    private void handleSignin() {
+    private void SigninMenu() {
         System.out.println("\n--- Signin ---");
         String email = InputHandler.getStringInput("Email: ").toLowerCase();
         String password = InputHandler.getStringInput("Password: ");
@@ -137,7 +144,8 @@ public class AppMenu {
         System.out.println("Pending rides:");
         for (int i = 0; i < pendingRides.size(); i++) {
             Ride r = pendingRides.get(i);
-            System.out.println((i+1) + ". " + r.getPickupLocation() + " -> " + r.getDropoffLocation() + " (" + r.getPassenger().getName() + ")");
+            System.out.println((i + 1) + ". " + r.getPickupLocation() + " -> " + r.getDropoffLocation() + " ("
+                    + r.getPassenger().getName() + ")");
         }
     }
 

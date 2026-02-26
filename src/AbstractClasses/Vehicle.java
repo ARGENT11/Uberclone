@@ -8,16 +8,12 @@ public abstract class Vehicle {
     private String licencePlate;
     private int noSeats;
     
-    //encountered an  with the constructor in car.java error which worked on doing this
-    private String color;
-    private String brand;
-    private String model;
-    private String type;
-    private int seats;
+    
 
 
+    
     public Vehicle(String vehicleColour, String vehicleBrand, String vehicleModel, String vehicleType,
-            String licencePlate, int vinNumber, int noSeats) {
+            String licencePlate, int noSeats) {
         this.vehicleColour = vehicleColour;
         this.vehicleBrand = vehicleBrand;
         this.vehicleModel = vehicleModel;
@@ -26,15 +22,7 @@ public abstract class Vehicle {
         this.noSeats = noSeats;
     }
 
-    public Vehicle(String vehicleColour, String vehicleBrand, String vehicleModel, String vehicleType,
-            String licencePlate, int noSeats) {
-        this.color = vehicleColour;
-        this.brand = vehicleBrand;
-        this.model = vehicleModel;
-        this.type = vehicleType;
-        this.licencePlate = licencePlate;
-        this.seats = noSeats;
-    }        
+    
 
 
     // set
