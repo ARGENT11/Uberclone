@@ -4,11 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import AbstractClasses.User;
-import ConcreteClasses.Authentication;
-import ConcreteClasses.InputHandler;
-import ConcreteClasses.Passager;
-import ConcreteClasses.Driver;
-import ConcreteClasses.Ride;
 import AbstractClasses.Vehicle;
 
 public class AppMenu {
