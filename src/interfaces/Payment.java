@@ -1,5 +1,6 @@
 package interfaces;
 
-public interface Payment {
+public interface Payment{
     double calculateFare(double distance);
+
 }

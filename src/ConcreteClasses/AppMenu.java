@@ -6,6 +6,7 @@ import java.util.List;
 import AbstractClasses.User;
 import AbstractClasses.Vehicle;
 
+
 public class AppMenu {
     private Authentication auth;
     private List<Ride> pendingRides = new ArrayList<>();
@@ -117,14 +118,44 @@ public class AppMenu {
                 case 2 -> assignRideToDriver(d);
                 case 3 -> d.viewProfile();
                 case 4 -> inMenu = false;
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println("Invalid choice!");
             }
         }
     }
 
     private void requestRideFlow(Passager p) {
+        Locations loc = new Locations();
+        Fare calculatedFare = new Fare();
+
         String pickup = InputHandler.getStringInput("Pickup location: ");
+        System.out.println("\n --- Available Destinations ---");
+        System.out.println("1. strathmore\n2. town\n3. home");
+        int pickupChoice = InputHandler.getIntInput("Choose pickup location: ");
+        switch (pickupChoice) {
+            case 1 -> pickup = "strathmore";
+            case 2 -> pickup = "town";
+            case 3 -> pickup = "home";
+            default -> {
+                System.out.println("Invalid choice!");
+                return;}}
+
         String dropoff = InputHandler.getStringInput("Dropoff location: ");
+        System.out.println("\n --- Available Destinations ---");
+        System.out.println("1. strathmore\n2. town\n3. home");
+        int dropoffChoice = InputHandler.getIntInput("Choose dropoff location: ");
+        if (pickup.equals(dropoff)) {
+            System.out.println("Pickup and dropoff cannot be the same!");
+            return;
+        }
+        switch (dropoffChoice) {
+            case 1 -> dropoff = "strathmore";
+            case 2 -> dropoff = "town";
+            case 3 -> dropoff = "home";
+            default -> {
+                System.out.println("Invalid choice!");
+                return;}}
+
+        
         double distance = InputHandler.getDoubleInput("Distance (km): ");
         Ride ride = p.requestRide(pickup, dropoff, distance);
         pendingRides.add(ride);

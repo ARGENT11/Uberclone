@@ -1,8 +1,8 @@
 package ConcreteClasses;
 import AbstractClasses.User;
-import interfaces.UserOperations;
+//import interfaces.UserOperations;
 
-public class Passager extends User implements UserOperations {
+public class Passager extends User  {//will include userOPerations later
 
     private double balance;
     private String paymentMethod;
@@ -32,24 +32,9 @@ public class Passager extends User implements UserOperations {
         this.paymentMethod = paymentMethod;
     }
 
-    // Implement UserOperations
-    @Override
-    public Void declineRide() {
-        System.out.println(getName() + " has declined the ride.");
-        return null;
-    }
+    
 
-    @Override
-    public void getLocation() {
-        System.out.println(getName() + "'s current location: [Simulated location]");
-    }
-
-    // Additional methods
-    public Ride requestRide(String pickupLocation, String dropoffLocation, double distance) {
-        Ride ride = new Ride(this, pickupLocation, dropoffLocation, distance);
-        System.out.println(getName() + " has requested a ride from " + pickupLocation + " to " + dropoffLocation);
-        return ride;
-    }
+    
 
     public void payFare(double fare) {
         if (balance >= fare) {
