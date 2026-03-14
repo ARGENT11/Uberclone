@@ -1,14 +1,8 @@
 package ConcreteClasses;
-import interfaces.Payment;
 
-public class PaymentProcessor implements Payment {
 
-    @Override
-    public double calculateFare(double distance) {
-        double baseFare = 2.0;
-        double perKm = 1.5;
-        return baseFare + (perKm * distance);
-    }
+
+public class PaymentProcessor {
 
     // Additional payment methods
     public boolean processPayment(Passager passenger, double fare) {

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Locations {
-    
+
     private final Map<String, Map<String, Double>> distanceMatrix = new HashMap<>();
 
     public Locations() {
@@ -32,9 +32,16 @@ public class Locations {
     }
 
     public double getDistance(String start, String end) {
-        if (distanceMatrix.containsKey(start) && distanceMatrix.get(start).containsKey(end)) {
-            return distanceMatrix.get(start).get(end);
+        for (String keyStart : distanceMatrix.keySet()) {
+            if (keyStart.equalsIgnoreCase(start)) {
+                for (String keyEnd : distanceMatrix.get(keyStart).keySet()) {
+                    if (keyEnd.equalsIgnoreCase(end)) {
+                        return distanceMatrix.get(keyStart).get(keyEnd);
+                    }
+                }
+            }
         }
         return -1;
     }
+
 }

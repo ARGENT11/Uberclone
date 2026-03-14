@@ -6,7 +6,6 @@ import java.util.List;
 import AbstractClasses.User;
 import AbstractClasses.Vehicle;
 
-
 public class AppMenu {
     private Authentication auth;
     private List<Ride> pendingRides = new ArrayList<>();
@@ -125,41 +124,67 @@ public class AppMenu {
 
     private void requestRideFlow(Passager p) {
         Locations loc = new Locations();
-        Fare calculatedFare = new Fare();
+        Fare fareCalc = new Fare();
 
-        String pickup = InputHandler.getStringInput("Pickup location: ");
-        System.out.println("\n --- Available Destinations ---");
+        System.out.println("\n --- Available Pickups ---");
         System.out.println("1. strathmore\n2. town\n3. home");
         int pickupChoice = InputHandler.getIntInput("Choose pickup location: ");
+        String pickup = "";
         switch (pickupChoice) {
             case 1 -> pickup = "strathmore";
             case 2 -> pickup = "town";
             case 3 -> pickup = "home";
             default -> {
                 System.out.println("Invalid choice!");
-                return;}}
+                return;
+            }
+        }
 
-        String dropoff = InputHandler.getStringInput("Dropoff location: ");
         System.out.println("\n --- Available Destinations ---");
         System.out.println("1. strathmore\n2. town\n3. home");
         int dropoffChoice = InputHandler.getIntInput("Choose dropoff location: ");
-        if (pickup.equals(dropoff)) {
-            System.out.println("Pickup and dropoff cannot be the same!");
-            return;
-        }
+        String dropoff = "";
         switch (dropoffChoice) {
             case 1 -> dropoff = "strathmore";
             case 2 -> dropoff = "town";
             case 3 -> dropoff = "home";
             default -> {
                 System.out.println("Invalid choice!");
-                return;}}
+                return;
+            }
+        }
 
-        
-        double distance = InputHandler.getDoubleInput("Distance (km): ");
-        Ride ride = p.requestRide(pickup, dropoff, distance);
-        pendingRides.add(ride);
-        System.out.println("Ride requested and added to pending queue.");
+        if (pickup.equals(dropoff)) {
+            System.out.println("Pickup and dropoff cannot be the same!");
+            return;
+        }
+
+        double distance = loc.getDistance(pickup, dropoff);
+
+        if (distance == -1) {
+            System.out.println("Error: Can't find route in the system.");
+            return;
+        }
+
+        double totalFare = fareCalc.calculateFare(distance);
+
+        // 3. Confirmation and Ride Creation
+        System.out.println("\n--- Trip Confirmation ---");
+        System.out.println("Distance: " + distance + " km");
+        System.out.println("Estimated Fare: KES " + totalFare);
+
+        String confirm = InputHandler.getStringInput("Confirm ride request? (y/n): ");
+
+        if (confirm.equalsIgnoreCase("y")) {
+
+            Ride ride = new Ride(p, pickup, dropoff, distance, totalFare);
+            pendingRides.add(ride);
+
+            System.out.println("\n Ride confirmed! Here are your details:");
+            ride.displayRideDetails();
+        } else {
+            System.out.println("Ride request cancelled.");
+        }
     }
 
     private void showPendingRides() {
