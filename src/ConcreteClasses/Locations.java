@@ -32,7 +32,7 @@ public class Locations {
     }
 
     public double getDistance(String start, String end) {
-        for (String keyStart : distanceMatrix.keySet()) {
+       try{ for (String keyStart : distanceMatrix.keySet()) {
             if (keyStart.equalsIgnoreCase(start)) {
                 for (String keyEnd : distanceMatrix.get(keyStart).keySet()) {
                     if (keyEnd.equalsIgnoreCase(end)) {
@@ -40,6 +40,10 @@ public class Locations {
                     }
                 }
             }
+        }}catch(NullPointerException e){
+            System.out.println("Error:Having problems finding the location");
+        }finally{
+            System.out.println("pickup:" + start +"dropoff:" + end);
         }
         return -1;
     }

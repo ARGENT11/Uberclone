@@ -211,12 +211,19 @@ public class AppMenu {
             System.out.println("Invalid selection.");
             return;
         }
-        Ride r = pendingRides.remove(idx);
-        r.acceptRide(d);
-        r.startRide();
-        r.completeRide();
-        System.out.println("Ride completed.");
-        PaymentProcessor pp = new PaymentProcessor();
-        pp.processPayment(r.getPassenger(), r.getFare());
+        try {
+            Ride r = pendingRides.remove(idx);
+            r.acceptRide(d);
+            r.startRide();
+            r.completeRide();
+            System.out.println("Ride completed.");
+            PaymentProcessor pp = new PaymentProcessor();
+            pp.processPayment(r.getPassenger(), r.getFare());
+        } catch (Exception e) {
+            System.out.println("Encoutered problem  while accepting the ride:" + e.getMessage());
+        } finally {
+            System.out.println("Returning to Driver Menu");
+        }
+
     }
 }
