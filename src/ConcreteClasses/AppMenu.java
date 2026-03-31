@@ -23,8 +23,13 @@ public class AppMenu {
                 case 1 -> SignupMenu();
                 case 2 -> SigninMenu();
                 case 3 -> {
+
+                    System.out.println("Saving data... Please wait.");
+
+                    Filehandler.saveUsers(auth.getUsers());
+
                     running = false;
-                    System.out.println("Exiting...");
+                    System.out.println("Exiting System!");
                 }
                 default -> System.out.println("Invalid choice.");
             }
@@ -39,40 +44,59 @@ public class AppMenu {
     }
 
     private void SignupMenu() {
-        System.out.println("\n--- Signup ---");
-        System.out.println("1. Passenger\n2. Driver");
-        User.UserType type = InputHandler.getUserTypeInput("Choose user type: ");
-        String name = InputHandler.getStringInput("Name: ");
-        String email = InputHandler.getStringInput("Email: ").toLowerCase();
-        String phone = InputHandler.getStringInput("Phone: ");
-        LocalDate dob = InputHandler.getDateInput("Date of birth (YYYY-MM-DD): ");
-        String password = InputHandler.getStringInput("Password: ");
+    System.out.println("\n--- Signup ---");
+    System.out.println("1. Passenger");
+    System.out.println("2. Driver");
+    System.out.println("0. Back to Main Menu"); 
 
-        if (type == User.UserType.PASSENGER) {
-            double balance = InputHandler.getDoubleInput("Initial balance: ");
-            String payment = InputHandler.getStringInput("Payment method: ");
-            Passager p = new Passager(name, email, phone, dob, balance, payment, password);
-            if (auth.signup(p))
-                System.out.println("Passenger signed up.");
-            else
-                System.out.println("Signup failed: email already exists.");
-        } else if (type == User.UserType.DRIVER) {
-            String color = InputHandler.getStringInput("Vehicle color: ");
-            String brand = InputHandler.getStringInput("Vehicle brand: ");
-            String model = InputHandler.getStringInput("Vehicle model: ");
-            String typeV = InputHandler.getStringInput("Vehicle type: ");
-            String plate = InputHandler.getStringInput("Plate number: ");
-            int seats = InputHandler.getIntInput("Number of seats: ");
-            Vehicle v = new Car(color, brand, model, typeV, plate, seats);
-            Driver d = new Driver(name, email, phone, dob, v, password);
-            if (auth.signup(d))
-                System.out.println("Driver signed up.");
-            else
-                System.out.println("Signup failed: email already exists.");
-        } else {
-            System.out.println("Invalid user type.");
-        }
+    
+    int choice = InputHandler.getIntInput("Choose an option: ");
+
+    if (choice == 0) {
+        System.out.println("Returning to main menu...");
+        return; 
     }
+
+    User.UserType type;
+    if (choice == 1) {
+        type = User.UserType.PASSENGER;
+    } else if (choice == 2) {
+        type = User.UserType.DRIVER;
+    } else {
+        System.out.println("Invalid selection. Returning to menu.");
+        return;
+    }
+
+    String name = InputHandler.getStringInput("Name: ");
+    String email = InputHandler.getStringInput("Email: ").toLowerCase();
+    String phone = InputHandler.getStringInput("Phone: ");
+    LocalDate dob = InputHandler.getDateInput("Date of birth (YYYY-MM-DD): ");
+    String password = InputHandler.getStringInput("Password: ");
+
+    if (type == User.UserType.PASSENGER) {
+        double balance = InputHandler.getDoubleInput("Initial balance: ");
+        String payment = InputHandler.getStringInput("Payment method: ");
+        Passenger p = new Passenger(name, email, phone, dob, balance, payment, password);
+        if (auth.signup(p))
+            System.out.println("Passenger signed up.");
+        else
+            System.out.println("Signup failed: email already exists.");
+            
+    } else if (type == User.UserType.DRIVER) {
+        String color = InputHandler.getStringInput("Vehicle color: ");
+        String brand = InputHandler.getStringInput("Vehicle brand: ");
+        String model = InputHandler.getStringInput("Vehicle model: ");
+        String typeV = InputHandler.getStringInput("Vehicle type: ");
+        String plate = InputHandler.getStringInput("Plate number: ");
+        int seats = InputHandler.getIntInput("Number of seats: ");
+        Vehicle v = new Car(color, brand, model, typeV, plate, seats);
+        Driver d = new Driver(name, email, phone, dob, v, password);
+        if (auth.signup(d))
+            System.out.println("Driver signed up.");
+        else
+            System.out.println("Signup failed: email already exists.");
+    }
+}
 
     private void SigninMenu() {
         System.out.println("\n--- Signin ---");
@@ -85,13 +109,13 @@ public class AppMenu {
         }
 
         if (user.getUserType() == User.UserType.PASSENGER) {
-            passengerMenu((Passager) user);
+            passengerMenu((Passenger) user);
         } else if (user.getUserType() == User.UserType.DRIVER) {
             driverMenu((Driver) user);
         }
     }
 
-    private void passengerMenu(Passager p) {
+    private void passengerMenu(Passenger p) {
         boolean inMenu = true;
         while (inMenu) {
             System.out.println("\n--- Passenger Menu ---");
@@ -122,7 +146,7 @@ public class AppMenu {
         }
     }
 
-    private void requestRideFlow(Passager p) {
+    private void requestRideFlow(Passenger p) {
         Locations loc = new Locations();
         Fare fareCalc = new Fare();
 

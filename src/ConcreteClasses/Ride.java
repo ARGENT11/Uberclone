@@ -1,7 +1,7 @@
 package ConcreteClasses;
 
 public class Ride {
-    private Passager passenger;
+    private Passenger passenger;
     private Driver driver;
     private String pickupLocation;
     private String dropoffLocation;
@@ -14,7 +14,7 @@ public class Ride {
 
     private RideStatus status;
 
-    public Ride(Passager passenger, String pickup, String dropoff, double distance, double fare) {
+    public Ride(Passenger passenger, String pickup, String dropoff, double distance, double fare) {
         this.passenger = passenger;
         this.pickupLocation = pickup;
         this.dropoffLocation = dropoff;
@@ -51,7 +51,7 @@ public class Ride {
  //tbh i dont why i didnt impliment these functions explicitly in ride.java but since i like making everthing complicated i decided to deligate the driver functions
 public String getPickupLocation() { return pickupLocation; }
 public String getDropoffLocation() { return dropoffLocation; }
-public Passager getPassenger() { return passenger; }
+public Passenger getPassenger() { return passenger; }
 public double getFare() { return fare; }
 
 public void acceptRide(Driver d) {

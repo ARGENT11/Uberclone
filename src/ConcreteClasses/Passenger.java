@@ -2,12 +2,12 @@ package ConcreteClasses;
 import AbstractClasses.User;
 //import interfaces.UserOperations;
 
-public class Passager extends User  {//will include userOPerations later
+public class Passenger extends User  {//will include userOPerations later
 
     private double balance;
     private String paymentMethod;
 
-    public Passager(String name, String email, String phoneNumber, java.time.LocalDate dateOfBirth,
+    public Passenger(String name, String email, String phoneNumber, java.time.LocalDate dateOfBirth,
             double balance, String paymentMethod, String password) {
         super(name, email, phoneNumber, dateOfBirth, User.UserType.PASSENGER, password);
         this.balance = balance;

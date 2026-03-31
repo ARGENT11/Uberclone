@@ -1,25 +1,22 @@
 package ConcreteClasses;
 
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Map;
 import AbstractClasses.User;
 
 public class Authentication {
-    private Map<String, User> users = new HashMap<>();
-
-    // had to reaseach for this one but basically we call the above classes which
-    // act as our database
-    // we use a method in that class called "containsKey" to check if such a value
-    // exists in our makeshift database
-    // so for signup we check if the email already exists and if it does we return
-    // false otherwise we add the user to our database and return true
+    
+    private Map<String, User> users = Filehandler.loadUsers();
+    
     public boolean signup(User user) {
+        
         if (users.containsKey(user.getEmail())) {
             return false;
         }
         users.put(user.getEmail(), user);
-        return true;
+        
+        Filehandler.saveUsers(users); 
+        return true; 
     }
 
     public User signin(String email, String password) {
@@ -29,4 +26,10 @@ public class Authentication {
         }
         return null;
     }
+
+    // added this getter so that i can add a save feature evrytime the user logs out soo i have to call the map
+    
+    public Map<String, User> getUsers() {
+    return users;
+}
 }
